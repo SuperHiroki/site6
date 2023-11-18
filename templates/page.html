@@ -2,68 +2,87 @@
 <html>
 <head>
   <title>動画素材館</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body>
-  <a href="{{ url_for('home') }}">Back to Home</a>
-  <h4>あなたは {{ nickname }} </h4>
-  <!--現在までの動画を表示-->
-  <h1 class="red-text">ページID : {{ page.id }}</h1>
-  <h1 class="blue-text">ページタイトル : {{ page.title }}</h1>
-  <div>
-    {{page_title_explanation_change | safe}}
-  </div>
-  <div>
-    {{page_explanation | safe}}
-  </div>
-  <div>
-    {{upload_movie | safe}}
-  </div>
-  <div>
-    {{  delete_movie | safe}}
-  </div>
-  <div class="video-grid">
-    {% for movie in movies %}
-    <div class="video-item">
-        {% if movie.content.endswith('.mp4') %}
-            <video controls>
-                <source src="{{ url_for('download_file', filename=movie.content) }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        {% elif movie.content.endswith('.jpg') or movie.content.endswith('.png') %}
-            <img src="{{ url_for('download_file', filename=movie.content) }}">
-        {% endif %}
-        <p>ID: {{ movie.id }} / タイトル: {{ movie.title }}</p>
-        <p>コメント:{{ movie.comment }}</p>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <div class="mx-auto p-4 max-w-full">
+    <div class="mb-4 text-center">
+      <a href="{{ url_for('home') }}" class="text-blue-500 hover:text-blue-700">Back to Home</a>
     </div>
-    {% endfor %}
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+      <h4 class="text-lg font-semibold text-center text-white mb-2">あなたは {{ nickname }}</h4>
+      <h1 class="text-3xl font-bold text-center text-yellow-400 mb-2">ページID : {{ page.id }}</h1>
+      <h1 class="text-3xl font-bold text-center text-green-400 mb-4">ページタイトル : {{ page.title }}</h1>
+    </div>
+
+    <div class="mb-4">
+      {{ page_title_explanation_change | safe }}
+    </div>
+    <div class="mb-4">
+      {{ page_explanation | safe }}
+    </div>
+    <div class="mb-4">
+      {{ upload_movie | safe }}
+    </div>
+    <div class="mb-4">
+      {{ delete_movie | safe }}
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-6">
+      {% for movie in movies %}
+        <div class="video-item bg-gray-200 p-4 rounded-lg shadow">
+          {% if movie.content.endswith('.mp4') %}
+            <video controls class="w-full h-auto">
+              <source src="{{ url_for('download_file', filename=movie.content) }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          {% elif movie.content.endswith('.jpg') or movie.content.endswith('.png') %}
+            <img src="{{ url_for('download_file', filename=movie.content) }}" class="w-full h-auto">
+          {% endif %}
+          <p>ID: {{ movie.id }} / タイトル: {{ movie.title }}</p>
+          <p>コメント: {{ movie.comment }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <hr class="border-gray-300 my-6">
+
+    <h1 class="text-3xl font-bold text-center text-green-600 mb-4">コメント</h1>
+    <div class="space-y-4">
+      {% for nickname, comment in nicknames_with_comments %}
+        <div class="bg-gray-200 p-4 rounded-lg shadow">
+          <p>コメントID: {{ comment.id }} / 時間: {{ comment.time }} / ニックネーム: {{ nickname }} ＞<br> {{ comment.content | safe }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- コメントフォーム -->
+    <div class="mt-6">
+      <form method="POST" class="space-y-4">
+        <div>
+          <label for="comment" class="block text-sm font-medium text-gray-700">Create Comment</label>
+          <textarea id="comment" name="comment" rows="10" required class="mt-1 p-3 border border-gray-300 rounded-md w-full"></textarea>
+        </div>
+        <div>
+          <input type="submit" value="Create Comment" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition">
+        </div>
+      </form>
+    </div>
+
+    <div class="mt-6">
+      <form method="POST" class="space-y-4">
+        <div>
+          <label for="delete_comment_id" class="block text-sm font-medium text-gray-700">Delete Comment</label>
+          <input type="text" id="delete_comment_id" name="delete_comment_id" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full">
+        </div>
+        <div>
+          <input type="submit" value="Delete Comment" class="w-full bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition">
+        </div>
+      </form>
+      <p class="text-red-500 mt-4">{{ message_for_delete_comment }}</p>
+    </div>
   </div>
-  <!--コメント-->
-  <p>=====================================================================================================================</p>
-  <h1 class="green-text">コメント</h1>
-  <ul>
-    {% for nickname, comment in nicknames_with_comments %}
-      <li>
-        <p>コメントID: {{ comment.id }} / 時間: {{ comment.time }} / ニックネーム: {{ nickname }} ＞<br> {{ comment.content | safe }}</p>
-      </li>
-    {% endfor %}
-  </ul>
-  <!--このBlogに対して新しくPOSTする-->
-  <form method="POST">
-    <label for="comment">Create Comment</label>
-    <textarea id="comment" class="comment_form" name="comment" rows="10" required></textarea>
-    <br>
-    <input type="submit" value="Create Comment">
-  </form>
-  <br>
-  <br>
-  <form method="POST">
-    <label for="delete_comment_id">Delete Comment（削除したいコメントIDを記入してください）<br>※自分のコメントのみ削除できます</label><br>
-    <input type="text" id="delete_comment_id" name="delete_comment_id" required>
-    <br>
-    <input type="submit" value="Delete Comment">
-  </form>
-  <p class="red-text">{{ message_for_delete_comment }}</p>
 </body>
 </html>
-

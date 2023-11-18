@@ -33,3 +33,26 @@ p {
     right: 0;
     padding: 10px;
 }
+
+
+/* reset.css */
+.reset h1,
+.reset h2,
+.reset h3,
+.reset h4,
+.reset p,
+.reset ul,
+.reset li,
+.reset dl,
+.reset dt,
+.reset dd {
+  all: revert;
+}
+
+.reset div{
+  all: revert;
+}
+
+.hiroki{
+    font-size: 66px;
+}

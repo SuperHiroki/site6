@@ -1,8 +1,13 @@
-<form method="POST">
-    <label for="page_title">page_title</label>
-    <input id="page_title" name="page_title" rows="10" value="{}" required>
-    <br>
-    <label for="page_explanation">page_explanation</label>
-    <textarea id="page_explanation" name="page_explanation" rows="10" class="comment_form">{}</textarea>
-    <input type="submit" value="page_title_and_explanation Change">
+<form method="POST" class="space-y-4 bg-white p-6 rounded-lg shadow-lg border border-gray-300 max-w-md mx-auto">
+    <div>
+        <label for="page_title" class="block text-sm font-medium text-gray-700">Page Title</label>
+        <input id="page_title" name="page_title" value="{}" required class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full">
+    </div>
+    <div>
+        <label for="page_explanation" class="block text-sm font-medium text-gray-700">Page Explanation</label>
+        <textarea id="page_explanation" name="page_explanation" rows="10" class="mt-1 p-3 border border-gray-300 rounded-md w-full">{}</textarea>
+    </div>
+    <div>
+        <input type="submit" value="Page Title and Explanation Change" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition">
+    </div>
 </form>

