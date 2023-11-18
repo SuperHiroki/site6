@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <h1 class="red-text">動画素材館</h1>
+  <h1 class="blue-text">管理者: ShiroatoHiro</h1>
+  <h4>あなたは {{ nickname }} </h4>
+  <a href="{{ url_for('signup') }}">Signup</a><br>
+  <a href="{{ url_for('login') }}">Login</a><br>
+  <a href="{{ url_for('logout') }}">Logout</a>
+  <ul>
+    {% for page in pages %}
+      {% if loop.first %}
+        <a href="{{ url_for('view_page', page_id=page.id) }}" class="first-page">{{ page.title }}</a>
+      {% endif %}
+      {% if not loop.first %}
+        <li>
+          <a href="{{ url_for('view_page', page_id=page.id) }}">{{ page.id }} : {{ page.title }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% if new_page_true_false %}
+    <h4><a href="{{ url_for('new_page') }}">New Page</a></h4>
+  {% endif %}
+</body>
+</html>

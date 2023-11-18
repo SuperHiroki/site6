@@ -1,0 +1,35 @@
+.comment_form {
+  width: 95%;
+}
+.red-text {
+    color: red;
+}
+.blue-text {
+    color: blue;
+}
+.green-text {
+    color: green;
+}
+p {
+    word-wrap: break-word;
+}
+.video-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+.video-item {
+    flex: 1 0 320px;  /* これにより、項目は320pxまで縮小し、それ以上は縮小しません */
+    margin: 10px;    /* 任意のマージンを追加 */
+}
+.video-item video, .video-item img {
+    max-width: 100%;  /* 最大幅を指定 */
+    max-height: calc(320px * 9 / 16) ; /* 最大高さを指定 */
+    width: auto;       /* 幅を自動に設定（アスペクト比を維持） */
+    height: auto;      /* 高さを自動に設定（アスペクト比を維持） */
+}
+.first-page {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}

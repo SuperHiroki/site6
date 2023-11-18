@@ -1,0 +1,8 @@
+<form method="POST">
+    <label for="page_title">page_title</label>
+    <input id="page_title" name="page_title" rows="10" value="{}" required>
+    <br>
+    <label for="page_explanation">page_explanation</label>
+    <textarea id="page_explanation" name="page_explanation" rows="10" class="comment_form">{}</textarea>
+    <input type="submit" value="page_title_and_explanation Change">
+</form>

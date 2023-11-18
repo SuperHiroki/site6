@@ -1,0 +1,13 @@
+<form method="POST" enctype="multipart/form-data">
+    <label for="movie_title">Movie Title</label>
+    <input id="movie_title" name="movie_title" rows="10" required>
+    <br>
+    <label for="movie_comment">Movie Comment</label>
+    <textarea id="movie_comment" class="comment_form" name="movie_comment" rows="10" required></textarea>
+    <br>
+    <label for="file">Upload a File</label>
+    <input type="file" id="file" name="file" accept=".jpeg, .png, .mp4" required>
+    <br>
+    <input type="submit" value="Upload Movie">
+</form>
+<br>
